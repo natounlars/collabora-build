@@ -4,6 +4,11 @@
 %global _builddir_c  %{_builddir}/collabora-office
 %global _package_note_flags %{nil}
 %global _annotated_build %{nil}
+%global _hardened_build 0
+%global _hardening_cflags %{nil}
+%global _hardening_ldflags %{nil}
+%global optflags %(echo %{optflags} | sed 's|-specs=/usr/lib/rpm/redhat/redhat-hardened-cc1||g; s|-specs=/usr/lib/rpm/redhat/redhat-annobin-cc1||g; s|-specs=/usr/lib/rpm/redhat/redhat-package-notes||g')
+
 
 Name:           collabora-office
 Version:        %{base_version}
