@@ -2,7 +2,8 @@
 %global base_version %(cat %{_sourcedir}/version.txt 2>/dev/null || echo 25.04.7.8.1)
 %global appname      collabora-office
 %global _builddir_c  %{_builddir}/collabora-office
-
+%define _lto_cflags %{nil}
+%undefine _annotated_build
 Name:           collabora-office
 Version:        %{base_version}
 # 用 copr_commit 让每个 COPR 构建唯一；不在 COPR 时降级到 %{?dist}
