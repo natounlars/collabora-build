@@ -78,6 +78,11 @@ This package is built directly from the upstream main branch of the Gerrit
 monorepo at build time.
 
 %prep
+export RPM_ARCH="$(uname -m)"
+export RPM_PACKAGE_NAME="%{name}"
+export RPM_PACKAGE_VERSION="%{version}"
+export RPM_PACKAGE_RELEASE="%{release}"
+export RPM_BUILD_DIR="%{_builddir}"
 # 清理历史构建（COPR 可能缓存 build 目录）
 rm -rf %{_builddir_c}
 rm -f  %{_builddir}/version.txt
