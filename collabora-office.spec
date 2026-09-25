@@ -56,6 +56,10 @@ BuildRequires:  qt6-qtwebengine-devel
 BuildRequires:  qt6-qtwebsockets-devel
 BuildRequires:  desktop-file-utils
 BuildRequires:  rpm-build
+BuildRequires:  perl-FindBin
+BuildRequires:  perl-Time-Piece
+BuildRequires:  perl
+BuildRequires:  perl-core
 
 # ---- 运行时依赖 --------------------------------------------------------
 Requires: glibc
