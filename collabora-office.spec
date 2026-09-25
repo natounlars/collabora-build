@@ -3,7 +3,7 @@
 %global appname      collabora-office
 %global _builddir_c  %{_builddir}/collabora-office
 %global _package_note_flags %{nil}
-%undefine _annotated_build
+%global _annotated_build %{nil}
 
 Name:           collabora-office
 Version:        %{base_version}
