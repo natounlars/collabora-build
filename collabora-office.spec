@@ -87,7 +87,7 @@ BuildRequires:  perl-Archive-Zip
 BuildRequires:  perl-JSON-PP
 BuildRequires:  perl-Digest-MD5
 BuildRequires:  perl-Data-Dump
-BuildRequires:  perl-gettext
+BuildRequires:  perl-Locale-gettext
 
 # ---- Python ----
 BuildRequires:  python3
@@ -147,7 +147,7 @@ BuildRequires:  mesa-libgbm-devel
 BuildRequires:  libepoxy-devel
 BuildRequires:  harfbuzz-devel
 BuildRequires:  graphite2-devel
-BuildRequires:  icu-devel
+BuildRequires:  libicu-devel
 BuildRequires:  lcms2-devel
 BuildRequires:  libtiff-devel
 BuildRequires:  libwebp-devel
@@ -161,7 +161,7 @@ BuildRequires:  qt6-qtbase-devel
 BuildRequires:  qt6-qtwebengine-devel
 BuildRequires:  qt6-qtwebsockets-devel
 BuildRequires:  qt6-linguist
-BuildRequires:  qt6-tools-devel
+BuildRequires:  qt6-qttools-devel
 
 # ---- 运行时依赖 --------------------------------------------------------
 Requires: glibc
@@ -182,6 +182,149 @@ Requires: alsa-lib
 Requires: libdrm
 Requires: mesa-libgbm
 Requires: cups-libs
+
+# ---- 构建工具 ----
+BuildRequires:  autoconf
+BuildRequires:  automake
+BuildRequires:  bc
+BuildRequires:  binutils
+BuildRequires:  bison
+BuildRequires:  desktop-file-utils
+BuildRequires:  doxygen
+BuildRequires:  findutils
+BuildRequires:  flex
+BuildRequires:  gcc-c++
+BuildRequires:  gettext
+BuildRequires:  gnupg2
+BuildRequires:  gperf
+BuildRequires:  hunspell-en-US
+BuildRequires:  libtool-ltdl-devel
+BuildRequires:  make
+BuildRequires:  mariadb-connector-c-devel
+BuildRequires:  patch
+BuildRequires:  perl(Digest::MD5)
+BuildRequires:  perl(FindBin)
+BuildRequires:  perl(base)
+BuildRequires:  perl(lib)
+BuildRequires:  glibc-all-langpacks
+BuildRequires:  libappstream-glib
+BuildRequires:  zip
+
+# ---- Python ----
+BuildRequires:  python3-devel
+BuildRequires:  python3-setuptools
+BuildRequires:  python3-lxml
+BuildRequires:  python3-polib
+
+# ---- 通用库 / 头文件 ----
+BuildRequires:  Box2D-devel
+BuildRequires:  boost-devel
+BuildRequires:  cups-devel
+BuildRequires:  dragonbox-static
+BuildRequires:  fast_float-devel
+BuildRequires:  fontpackages-devel
+BuildRequires:  frozen-static
+BuildRequires:  glm-devel
+BuildRequires:  gpgmepp-devel
+BuildRequires:  hyphen-devel
+BuildRequires:  libjpeg-turbo-devel
+BuildRequires:  libnumbertext-devel
+BuildRequires:  lpsolve-devel
+BuildRequires:  openldap-devel
+BuildRequires:  pam-devel
+BuildRequires:  zxcvbn-c-devel
+BuildRequires:  unixODBC-devel
+
+# ---- pkgconfig 依赖 ----
+BuildRequires:  pkgconfig(bluez)
+BuildRequires:  pkgconfig(cppunit) >= 1.14.0
+BuildRequires:  pkgconfig(dconf)
+BuildRequires:  pkgconfig(epoxy)
+BuildRequires:  pkgconfig(evolution-data-server-1.2)
+BuildRequires:  pkgconfig(expat)
+BuildRequires:  pkgconfig(freetype2)
+BuildRequires:  pkgconfig(gobject-introspection-1.0)
+BuildRequires:  pkgconfig(graphite2)
+BuildRequires:  pkgconfig(gstreamer-1.0)
+BuildRequires:  pkgconfig(gstreamer-plugins-base-1.0)
+BuildRequires:  pkgconfig(gtk+-3.0)
+BuildRequires:  pkgconfig(gtk4)
+BuildRequires:  pkgconfig(harfbuzz)
+BuildRequires:  pkgconfig(hunspell)
+BuildRequires:  pkgconfig(ice)
+BuildRequires:  pkgconfig(icu-i18n)
+BuildRequires:  pkgconfig(lcms2)
+BuildRequires:  pkgconfig(libabw-0.1)
+BuildRequires:  pkgconfig(libargon2)
+BuildRequires:  pkgconfig(libcdr-0.1)
+BuildRequires:  pkgconfig(libclucene-core)
+BuildRequires:  pkgconfig(libcmis-0.6)
+BuildRequires:  pkgconfig(libcurl)
+BuildRequires:  pkgconfig(libe-book-0.1)
+BuildRequires:  pkgconfig(libetonyek-0.1)
+BuildRequires:  pkgconfig(libeot)
+BuildRequires:  pkgconfig(libepubgen-0.1)
+BuildRequires:  pkgconfig(libexttextcat)
+BuildRequires:  pkgconfig(libfreehand-0.1)
+BuildRequires:  pkgconfig(liblangtag)
+BuildRequires:  pkgconfig(libmspub-0.1)
+BuildRequires:  pkgconfig(libmwaw-0.3)
+BuildRequires:  pkgconfig(libodfgen-0.1)
+BuildRequires:  pkgconfig(liborcus-0.21)
+BuildRequires:  pkgconfig(libpagemaker-0.0)
+BuildRequires:  pkgconfig(libpq)
+BuildRequires:  pkgconfig(libqxp-0.0)
+BuildRequires:  pkgconfig(librevenge-0.0)
+BuildRequires:  pkgconfig(libstaroffice-0.0)
+BuildRequires:  pkgconfig(libtiff-4)
+BuildRequires:  pkgconfig(libvisio-0.1)
+BuildRequires:  pkgconfig(libwebp)
+BuildRequires:  pkgconfig(libwpd-0.10)
+BuildRequires:  pkgconfig(libwpg-0.3)
+BuildRequires:  pkgconfig(libwps-0.4)
+BuildRequires:  pkgconfig(libxml-2.0)
+BuildRequires:  pkgconfig(libxslt)
+BuildRequires:  pkgconfig(libzmf-0.0)
+BuildRequires:  pkgconfig(md4c)
+BuildRequires:  pkgconfig(mdds-3.0)
+BuildRequires:  pkgconfig(mythes)
+BuildRequires:  pkgconfig(neon)
+BuildRequires:  pkgconfig(nss)
+BuildRequires:  pkgconfig(poppler)
+BuildRequires:  pkgconfig(poppler-cpp)
+BuildRequires:  pkgconfig(redland)
+BuildRequires:  pkgconfig(sane-backends)
+BuildRequires:  pkgconfig(xext)
+BuildRequires:  pkgconfig(xinerama)
+BuildRequires:  pkgconfig(xmlsec1-nss)
+BuildRequires:  pkgconfig(xt)
+BuildRequires:  pkgconfig(zlib)
+BuildRequires:  pkgconfig(zxing)
+
+# ---- 字体（engine 的 cppunit 测试用）----
+BuildRequires:  dejavu-fonts-all
+BuildRequires:  google-carlito-fonts
+BuildRequires:  google-rubik-fonts
+BuildRequires:  google-crosextra-caladea-fonts
+BuildRequires:  google-noto-fonts-all
+BuildRequires:  amiri-fonts
+BuildRequires:  amiri-quran-fonts
+BuildRequires:  liberation-mono-fonts
+BuildRequires:  liberation-narrow-fonts
+BuildRequires:  liberation-sans-fonts
+BuildRequires:  liberation-serif-fonts
+BuildRequires:  linux-libertine-fonts
+
+BuildRequires:  qt6-qtbase-devel
+BuildRequires:  qt6-qtwebengine-devel
+BuildRequires:  qt6-qtwebsockets-devel
+BuildRequires:  qt6-linguist
+BuildRequires:  qt6-qttools-devel
+BuildRequires:  npm
+BuildRequires:  git
+
+BuildRequires:  pkgconfig(icu-uc)
+BuildRequires:  pkgconfig(icu-io)
 
 %description
 Collabora Office is a LibreOffice-based desktop office suite built on Qt6 WebEngine.
