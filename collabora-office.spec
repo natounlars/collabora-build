@@ -60,6 +60,108 @@ BuildRequires:  perl-FindBin
 BuildRequires:  perl-Time-Piece
 BuildRequires:  perl
 BuildRequires:  perl-core
+BuildRequires:  gperf
+# ---- 编译工具链 ----
+BuildRequires:  autoconf
+BuildRequires:  automake
+BuildRequires:  bison
+BuildRequires:  flex
+BuildRequires:  gcc
+BuildRequires:  gcc-c++
+BuildRequires:  gperf
+BuildRequires:  libtool
+BuildRequires:  make
+BuildRequires:  nasm
+BuildRequires:  patch
+BuildRequires:  pkgconf-pkg-config
+BuildRequires:  zip
+BuildRequires:  unzip
+BuildRequires:  which
+
+# ---- Perl（LibreOffice 大量依赖）----
+BuildRequires:  perl
+BuildRequires:  perl-core
+BuildRequires:  perl-FindBin
+BuildRequires:  perl-Time-Piece
+BuildRequires:  perl-Archive-Zip
+BuildRequires:  perl-JSON-PP
+BuildRequires:  perl-Digest-MD5
+BuildRequires:  perl-Data-Dump
+BuildRequires:  perl-gettext
+
+# ---- Python ----
+BuildRequires:  python3
+BuildRequires:  python3-devel
+BuildRequires:  python3-lxml
+BuildRequires:  python3-polib
+BuildRequires:  python3-setuptools
+
+# ---- 构建辅助 ----
+BuildRequires:  bc
+BuildRequires:  findutils
+BuildRequires:  git
+BuildRequires:  rsync
+BuildRequires:  desktop-file-utils
+BuildRequires:  gettext
+BuildRequires:  cppunit-devel
+
+# ---- 必需的开发库（engine 依赖）----
+BuildRequires:  fontconfig-devel
+BuildRequires:  freetype-devel
+BuildRequires:  libcap-devel
+BuildRequires:  libpng-devel
+BuildRequires:  libjpeg-turbo-devel
+BuildRequires:  libzstd-devel
+BuildRequires:  zlib-devel
+BuildRequires:  openssl-devel
+BuildRequires:  pam-devel
+BuildRequires:  libxml2-devel
+BuildRequires:  libxslt-devel
+BuildRequires:  expat-devel
+BuildRequires:  dbus-devel
+BuildRequires:  cups-devel
+BuildRequires:  libX11-devel
+BuildRequires:  libXext-devel
+BuildRequires:  libXrender-devel
+BuildRequires:  libXrandr-devel
+BuildRequires:  libXinerama-devel
+BuildRequires:  libXi-devel
+BuildRequires:  libXfixes-devel
+BuildRequires:  libXcomposite-devel
+BuildRequires:  libXdamage-devel
+BuildRequires:  libXcursor-devel
+BuildRequires:  libXt-devel
+BuildRequires:  libXtst-devel
+BuildRequires:  libICE-devel
+BuildRequires:  libSM-devel
+BuildRequires:  libxkbfile-devel
+BuildRequires:  libxshmfence-devel
+BuildRequires:  gtk3-devel
+BuildRequires:  gtk4-devel
+BuildRequires:  nss-devel
+BuildRequires:  alsa-lib-devel
+BuildRequires:  libdrm-devel
+BuildRequires:  mesa-libGL-devel
+BuildRequires:  mesa-libEGL-devel
+BuildRequires:  mesa-libgbm-devel
+BuildRequires:  libepoxy-devel
+BuildRequires:  harfbuzz-devel
+BuildRequires:  graphite2-devel
+BuildRequires:  icu-devel
+BuildRequires:  lcms2-devel
+BuildRequires:  libtiff-devel
+BuildRequires:  libwebp-devel
+BuildRequires:  libcurl-devel
+BuildRequires:  boost-devel
+BuildRequires:  glm-devel
+BuildRequires:  libatomic
+
+# ---- Qt6（Collabora Office 桌面版必需）----
+BuildRequires:  qt6-qtbase-devel
+BuildRequires:  qt6-qtwebengine-devel
+BuildRequires:  qt6-qtwebsockets-devel
+BuildRequires:  qt6-linguist
+BuildRequires:  qt6-tools-devel
 
 # ---- 运行时依赖 --------------------------------------------------------
 Requires: glibc
