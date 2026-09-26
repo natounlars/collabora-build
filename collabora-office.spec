@@ -349,16 +349,20 @@ bash %{SOURCE0} %{_builddir}
 bash %{SOURCE1} %{_builddir_c}
 
 %build
+export CFLAGS=$(echo "$CFLAGS" | sed -e 's/-flto=auto//g' -e 's/-ffat-lto-objects//g')
+export CXXFLAGS=$(echo "$CXXFLAGS" | sed -e 's/-flto=auto//g' -e 's/-ffat-lto-objects//g')
+export LDFLAGS=$(echo "$LDFLAGS" | sed -e 's/-flto=auto//g' -e 's/-ffat-lto-objects//g')
 cd %{_builddir_c}/engine
 ./autogen.sh \
     --with-distro=CPLinux-LOKit \
     --without-package-format \
     --with-system-nss \
+    --disable-lto \
     --with-lang=zh-CN
 make -j$(nproc) %{?_smp_mflags}
 
 cd %{_builddir_c}
-./autogen.sh --enable-qtapp --disable-server
+./autogen.sh --enable-qtapp --disable-server --disable-lto
 make -j$(nproc) %{?_smp_mflags}
 
 %install
