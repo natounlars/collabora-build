@@ -8,7 +8,7 @@
 %global _hardening_cflags %{nil}
 %global _hardening_ldflags %{nil}
 %global optflags %(echo %{optflags} | sed 's|-specs=/usr/lib/rpm/redhat/redhat-hardened-cc1||g; s|-specs=/usr/lib/rpm/redhat/redhat-annobin-cc1||g; s|-specs=/usr/lib/rpm/redhat/redhat-package-notes||g')
-
+%global _lto_cflags %{nil}
 
 Name:           collabora-office
 Version:        %{base_version}
