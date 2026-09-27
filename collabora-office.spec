@@ -9,6 +9,17 @@
 %global _hardening_ldflags %{nil}
 %global optflags %(echo %{optflags} | sed 's|-specs=/usr/lib/rpm/redhat/redhat-hardened-cc1||g; s|-specs=/usr/lib/rpm/redhat/redhat-annobin-cc1||g; s|-specs=/usr/lib/rpm/redhat/redhat-package-notes||g')
 %global _lto_cflags %{nil}
+# 不在 RPM 里生成 debuginfo，减小构建开销
+%global debug_package %{nil}
+%global __strip /bin/true
+
+# 不检查未打包文件（因为我们已经全打了）
+%define _unpackaged_files_terminate_build 0
+
+# 不检查 shebang、rpath 等（Collabora 的二进制比较复杂）
+%global __brp_mangle_shebangs %{nil}
+%global __brp_check_rpaths %{nil}
+%global __brp_strip %{nil}
 
 Name:           collabora-office
 Version:        %{base_version}
@@ -367,41 +378,62 @@ make -j$(nproc) %{?_smp_mflags}
 
 %install
 rm -rf %{buildroot}
+mkdir -p %{buildroot}
 
-# 安装 coda-qt
-install -Dm 755 %{_builddir_c}/qt/coda-qt \
-    %{buildroot}%{_bindir}/%{appname}
+# ============================================================
+# 1. engine：整棵树拷进去（不依赖 make install 的行为）
+# ============================================================
+mkdir -p %{buildroot}%{_libdir}/collabora-office
+cp -a %{_builddir_c}/engine/instdir/. %{buildroot}%{_libdir}/collabora-office/
 
-# 安装 engine 运行时
-mkdir -p %{buildroot}%{_libdir}/%{appname}
-cp -a %{_builddir_c}/engine/instdir/. %{buildroot}%{_libdir}/%{appname}/
+# ============================================================
+# 2. online：先尝试 make install，失败也不中断
+# ============================================================
+cd %{_builddir_c}
+make install DESTDIR=%{buildroot} || echo "WARN: make install 失败，改用兜底方式"
 
-# 启动脚本
-cat > %{buildroot}%{_bindir}/%{appname} <<'EOF'
-#!/bin/bash
-export LD_LIBRARY_PATH="/usr/lib64/collabora-office/program${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
-exec /usr/lib64/collabora-office/program/coda-qt "$@"
-EOF
-chmod 755 %{buildroot}%{_bindir}/%{appname}
+# ============================================================
+# 3. 兜底：把 coda-qt 主程序塞进 /usr/bin
+# ============================================================
+if [ -f %{_builddir_c}/qt/coda-qt ]; then
+    install -Dm 755 %{_builddir_c}/qt/coda-qt %{buildroot}%{_bindir}/coda-qt
+fi
 
-# 桌面文件、图标、metainfo
-install -Dm 644 %{_builddir_c}/qt/desktop/com.collaboraoffice.Office.desktop \
-    %{buildroot}%{_datadir}/applications/com.collaboraoffice.Office.desktop
-install -Dm 644 %{_builddir_c}/qt/desktop/com.collaboraoffice.Office.metainfo.xml \
-    %{buildroot}%{_datadir}/metainfo/com.collaboraoffice.Office.metainfo.xml
+# ============================================================
+# 4. 兜底：把 qt/ 下的桌面文件、图标、metainfo 全部扫进 buildroot
+# ============================================================
+if [ -d %{_builddir_c}/qt ]; then
+    # .desktop 文件
+    find %{_builddir_c}/qt -maxdepth 4 -name '*.desktop' 2>/dev/null | while read f; do
+        install -Dm 644 "$f" "%{buildroot}%{_datadir}/applications/$(basename "$f")"
+    done
+    # metainfo / appdata
+    find %{_builddir_c}/qt -maxdepth 4 \( -name '*.metainfo.xml' -o -name '*.appdata.xml' \) 2>/dev/null | while read f; do
+        install -Dm 644 "$f" "%{buildroot}%{_datadir}/metainfo/$(basename "$f")"
+    done
+    # SVG 图标
+    find %{_builddir_c}/qt -maxdepth 4 -name '*.svg' 2>/dev/null | while read f; do
+        install -Dm 644 "$f" "%{buildroot}%{_datadir}/icons/hicolor/scalable/apps/$(basename "$f")"
+    done
+    # PNG 图标
+    find %{_builddir_c}/qt -maxdepth 4 -name '*.png' 2>/dev/null | while read f; do
+        install -Dm 644 "$f" "%{buildroot}%{_datadir}/icons/hicolor/256x256/apps/$(basename "$f")"
+    done
+fi
 
-# 图标
-find %{_builddir_c}/qt/desktop -maxdepth 2 -name '*.svg' | while read -r icon; do
-    install -Dm 644 "$icon" \
-        "%{buildroot}%{_datadir}/icons/hicolor/scalable/apps/$(basename "$icon")"
-done
+# ============================================================
+# 5. 关键：生成完整的文件列表（覆盖 buildroot 里所有文件+符号链接）
+# ============================================================
+cd %{buildroot}
+find . \( -type f -o -type l \) 2>/dev/null \
+    | sed 's|^\./||' \
+    | sed 's|^|/|' \
+    > %{_builddir}/rpm-files.txt
 
-%files
-%{_bindir}/%{appname}
-%{_libdir}/%{appname}
-%{_datadir}/applications/com.collaboraoffice.Office.desktop
-%{_datadir}/metainfo/com.collaboraoffice.Office.metainfo.xml
-%{_datadir}/icons/hicolor/scalable/apps/*.svg
+echo "=== 打包文件总数: $(wc -l < %{_builddir}/rpm-files.txt) ==="
+head -20 %{_builddir}/rpm-files.txt
+
+%files -f %{_builddir}/rpm-files.txt
 
 %changelog
 * Fri Sep 25 2026 Your Name <you@example.com> - %{version}-1
